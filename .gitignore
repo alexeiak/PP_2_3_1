@@ -1,0 +1,9 @@
+# Maven
+log/
+target/
+
+# Ignore Gradle build output directory
+build
+
+# IDEA preferences
+.idea
