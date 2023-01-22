@@ -2,6 +2,7 @@ package org.web.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -18,9 +19,10 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableTransactionManagement
 @PropertySource("classpath:db.properties")
-public class PersistenceJPAConfig {
+@EnableTransactionManagement
+@ComponentScan(value = "org.web")
+public class JPAConfig {
 
 	@Autowired
 	private Environment env;
@@ -30,7 +32,7 @@ public class PersistenceJPAConfig {
 		LocalContainerEntityManagerFactoryBean entityManager
 				= new LocalContainerEntityManagerFactoryBean();
 		entityManager.setDataSource(dataSource());
-		entityManager.setPackagesToScan(new String[]{"org.web"});
+		entityManager.setPackagesToScan(new String[]{"org.web.model"});
 
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		entityManager.setJpaVendorAdapter(vendorAdapter);
@@ -65,8 +67,9 @@ public class PersistenceJPAConfig {
 
 	Properties additionalProperties() {
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+		properties.setProperty("hibernate.show_sql", "true");
 
 		return properties;
 	}
