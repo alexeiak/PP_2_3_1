@@ -1,5 +1,6 @@
 package org.web.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.web.model.User;
 import org.web.service.UserService;
 
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/users")
@@ -29,7 +29,6 @@ public class UsersController {
 		if (bindingResult.hasErrors() || userService.existsByEmail(user.getEmail())) {
 			return "new";
 		}
-
 		userService.create(user);
 		return "redirect:/users";
 	}
@@ -61,7 +60,6 @@ public class UsersController {
 			return "edit";
 		}
 		userService.update(user, id);
-
 		return "redirect:/users";
 	}
 

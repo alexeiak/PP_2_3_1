@@ -1,22 +1,22 @@
 package org.web.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id;
+	private Long id;
 
 	@Column(name = "name")
 	@NotEmpty(message = "Name should be not empty")
@@ -26,9 +26,9 @@ public class User {
 	@Column(name = "lastname")
 	private String lastname;
 
+	@Column(name = "email", unique = true, length = 50)
 	@NotEmpty(message = "Email should be not empty")
 	@Email(message = "Email should be valid")
-	@Column(name = "email", unique = true, length = 50)
 	private String email;
 
 	public User() {
